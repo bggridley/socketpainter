@@ -19,7 +19,7 @@ public class InputHandler implements MouseInputListener {
         if (e.getY() > swatches.getLocation().getY() && e.getY() < swatches.getLocation().getY() + swatches.getHeight()
                 && e.getX() < swatches.getWidth()) {
             int index = (e.getY() - (int) swatches.getLocation().getY()) / swatches.getPanelSize();
-            // System.out.println(index);
+            //System.out.println(index);
             swatches.setSelected(index);
             drawPanel.setColor(swatches.getSelected());
         }
@@ -33,7 +33,7 @@ public class InputHandler implements MouseInputListener {
                 && e.getY() < drawPanel.getLocation().getY() + drawPanel.getHeight()
                 && e.getX() > drawPanel.getLocation().getX()) {
             drawPanel.beginDraw(e.getX() - (int) drawPanel.getLocation().getX(), e.getY() - (int)drawPanel.getLocation().getY());
-            //System.out.//println("starting ");
+            //System.out.println("starting ");
         }
     }
 

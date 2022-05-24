@@ -12,8 +12,19 @@ public class MyPanel extends JPanel {
     private Color currentColor;
     private boolean lineMode = true;
     private ArrayList<Shape> shapeArray = new ArrayList<>();
-
+    private Painter painter;
     private int[] positions = new int[4]; // stores the previous values
+
+
+    public MyPanel(Painter p) {
+        this.painter = p;
+    }
+
+    public ArrayList<Shape> getShapeArray() {
+        return shapeArray;
+    }
+
+
     public void setColor(Color c) {
         this.currentColor = c;
     }
@@ -26,9 +37,9 @@ public class MyPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        for(Shape s : shapeArray) {
+        for (Shape s : shapeArray) {
             g.setColor(s.color);
-            if(s.line) {
+            if (s.line) {
                 g.drawLine(s.positions[0], s.positions[1], s.positions[2], s.positions[3]);
             } else {
                 g.drawOval(s.positions[0], s.positions[1], s.positions[2], s.positions[3]);
@@ -36,7 +47,7 @@ public class MyPanel extends JPanel {
         }
 
         g.setColor(currentColor);
-        
+
         if (draw) {
 
             if (lineMode) {
@@ -68,7 +79,6 @@ public class MyPanel extends JPanel {
             // System.out.println(startX);
         }
 
-       
         // System.out.println("PC called");
     }
 
@@ -88,26 +98,14 @@ public class MyPanel extends JPanel {
     }
 
     public void stopDraw() {
-        draw = false;
+        if (draw) {
+            draw = false;
 
-        shapeArray.add(new Shape(positions, currentColor, lineMode));
-    }
-
-    private class Shape {
-
-        // i hate encapsulation because it means i have to make getters O - O
-        public int[] positions;
-        public Color color;
-        public boolean line;
-
-        public Shape(int[] pos, Color c, boolean b) {
-            positions = new int[4];
-            for(int i = 0; i < pos.length; i++) {
-                positions[i] = pos[i];
-            }
-
-            this.color = c;
-            this.line = b;
+            Shape shape = new Shape(positions, currentColor, lineMode);
+            shapeArray.add(shape);
+            painter.sendShape(shape);
         }
     }
+
+  
 }
